@@ -214,11 +214,17 @@ void display_matrix (Matrix_t* m) {
 
 }
 
-	//TODO FUNCTION COMMENT
+	//TODO Finished
+	// Purpose: Read a matrix from a given filename
+	//	then error check, send to create matrix
+	// Input: filename for matrix to be read
+	// Output: boolean if it worked
 bool read_matrix (const char* matrix_input_filename, Matrix_t** m) {
 	
-	//TODO ERROR CHECK INCOMING PARAMETERS
-
+	//TODO Finished
+	if (!matrix_input_filename){
+		return false;
+	}//-
 
 	int fd = open(matrix_input_filename,O_RDONLY);
 	if (fd < 0) {
@@ -347,10 +353,16 @@ bool read_matrix (const char* matrix_input_filename, Matrix_t** m) {
 	return true;
 }
 
-	//TODO FUNCTION COMMENT
+	//TODO Finished
+	// Purpose: error check matrix, then write to file
+	// Input: filename and matrix
+	// Output: full file
 bool write_matrix (const char* matrix_output_filename, Matrix_t* m) {
 	
-	//TODO ERROR CHECK INCOMING PARAMETERS
+	//TODO Finished
+	if (!m){
+		return false;
+	}
 
 	int fd = open (matrix_output_filename, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	/* ERROR HANDLING USING errorno*/
@@ -415,10 +427,16 @@ bool write_matrix (const char* matrix_output_filename, Matrix_t* m) {
 	return true;
 }
 
-	//TODO FUNCTION COMMENT
+	//TODO Finished
+	// Purpose: formulate random values for a matrix
+	// Input: matrix, range of points
+	// Output: randomized matrix, bool if worked
 bool random_matrix(Matrix_t* m, unsigned int start_range, unsigned int end_range) {
 	
-	//TODO ERROR CHECK INCOMING PARAMETERS
+	//TODO
+	if (!m || start_range <= 0 || end_range < start_range){
+		return false;
+	}
 
 	for (unsigned int i = 0; i < m->rows; ++i) {
 		for (unsigned int j = 0; j < m->cols; ++j) {
@@ -430,17 +448,29 @@ bool random_matrix(Matrix_t* m, unsigned int start_range, unsigned int end_range
 
 /*Protected Functions in C*/
 
-	//TODO FUNCTION COMMENT
+	//TODO Finished
+	// Puprpose: get matrix from data array
+	// Input: data, matrix to fill
+	// Ouput: matrix full of data
 void load_matrix (Matrix_t* m, unsigned int* data) {
 	
-	//TODO ERROR CHECK INCOMING PARAMETERS
+	//TODO Finished
+	if ((data) == NULL){
+		return;
+	}
 	memcpy(m->data,data,m->rows * m->cols * sizeof(unsigned int));
 }
 
-	//TODO FUNCTION COMMENT
+	//TODO Finished
+	// Purpose: place matrix points in array, added
+	// Input: matrices to add, number of matrices
+	// Ouput: new array with matrices
 unsigned int add_matrix_to_array (Matrix_t** mats, Matrix_t* new_matrix, unsigned int num_mats) {
 	
-	//TODO ERROR CHECK INCOMING PARAMETERS
+	//TODO Finished
+	if ((*mats) == NULL || num_mats <= 0){
+		return 0;
+	}
 	static long int current_position = 0;
 	const long int pos = current_position % num_mats;
 	if ( mats[pos] ) {
