@@ -33,7 +33,10 @@ void load_matrix (Matrix_t* m, unsigned int* data);
 bool create_matrix (Matrix_t** new_matrix, const char* name, const unsigned int rows,
 						const unsigned int cols) {
 
-	//TODO ERROR CHECK INCOMING PARAMETERS
+	//TODO finished
+	if (rows <= 0 || (name) == NULL){
+		return false;
+	} //-	
 
 	*new_matrix = calloc(1,sizeof(Matrix_t));
 	if (!(*new_matrix)) {
@@ -54,11 +57,18 @@ bool create_matrix (Matrix_t** new_matrix, const char* name, const unsigned int 
 
 }
 
-	//TODO FUNCTION COMMENT
+	//TODO Finished
+	// Purpose: uninstantiate any memory instantiated by
+	//	creation of matrix
+	// Input: pointer to matrix created
+	// Output: none, free matrix
 
 void destroy_matrix (Matrix_t** m) {
 
-	//TODO ERROR CHECK INCOMING PARAMETERS
+	//TODO Finished
+	if ((*m) == NULL){ //already freed or nonexistent
+		return;
+	} //-
 	
 	free((*m)->data);
 	free(*m);
@@ -67,13 +77,15 @@ void destroy_matrix (Matrix_t** m) {
 
 
 	
-	//TODO FUNCTION COMMENT
+	//TODO finished
+	// Purpose: to check if two matrices are same in memory
+	// Input: two matrices, a and b
+	// Output: boolean result of compare
 bool equal_matrices (Matrix_t* a, Matrix_t* b) {
 
-	//TODO ERROR CHECK INCOMING PARAMETERS
-	
+	//TODO finished, thanks \/
 	if (!a || !b || !a->data || !b->data) {
-		return false;	
+		return false;
 	}
 
 	int result = memcmp(a->data,b->data, sizeof(unsigned int) * a->rows * a->cols);
@@ -83,15 +95,18 @@ bool equal_matrices (Matrix_t* a, Matrix_t* b) {
 	return false;
 }
 
-	//TODO FUNCTION COMMENT
+	//TODO finished
+	// Purpose: take on matrix, copy values into second
+	// Input: initial matrix, pointer to destination matrix
+	// Output: boolean of whether it worked,
+	//	full destination matrix
 bool duplicate_matrix (Matrix_t* src, Matrix_t* dest) {
 
 
-	//TODO ERROR CHECK INCOMING PARAMETERS
-
-	if (!src) {
+	//TODO finished
+	if (!src || (dest->data) != NULL) {
 		return false;
-	}
+	} //-
 	/*
 	 * copy over data
 	 */
@@ -100,10 +115,29 @@ bool duplicate_matrix (Matrix_t* src, Matrix_t* dest) {
 	return equal_matrices (src,dest);
 }
 
-	//TODO FUNCTION COMMENT
+	//TODO Finished
+	// Purpose: shift values of a matrix
+	//	in user-specified direction
+	// Input: matrix to be shifted,
+	//	direction input 'l' for left
+	//			'r' for right
+	//	shift mass
+	// Output: change given matrix to shifted
+	// 	return boolean of result
 bool bitwise_shift_matrix (Matrix_t* a, char direction, unsigned int shift) {
 	
-	//TODO ERROR CHECK INCOMING PARAMETERS
+	//TODO Finished
+	if (direction != 'l' && direction != 'r'){
+		printf("You must specify a direction\n");
+		printf("Type l for left\n");
+		printf("Type r for right\n");
+		printf("Try again.\n\n");
+		return false;
+	}
+	if (shift <= 0){
+		return false;
+	}//-
+
 	if (!a) {
 		return false;
 	}
@@ -131,10 +165,19 @@ bool bitwise_shift_matrix (Matrix_t* a, char direction, unsigned int shift) {
 	return true;
 }
 
-	//TODO FUNCTION COMMENT
+	//TODO Finished
+	// Purpose: add values in two matrices, store in a third
+	// Input: two matrices to be "added"
+	//	Note: the actual adding of two matrices in
+	//	mathematics can be more complex than what is
+	//	being done here, especially assuming diff sizes
+	// Output: boolean of result of add, added matrix
 bool add_matrices (Matrix_t* a, Matrix_t* b, Matrix_t* c) {
 
-	//TODO ERROR CHECK INCOMING PARAMETERS
+	//TODO Finished
+	if (!a || !b){
+		return false;
+	}//-
 
 	if (a->rows != b->rows && a->cols != b->cols) {
 		return false;
@@ -148,11 +191,16 @@ bool add_matrices (Matrix_t* a, Matrix_t* b, Matrix_t* c) {
 	return true;
 }
 
-	//TODO FUNCTION COMMENT
+	//TODO Finished
+	// Purpose: take in a matrix, display its values
+	// Input: matrix to be displayed
+	// Output: visual representation of matrix
 void display_matrix (Matrix_t* m) {
 	
-	//TODO ERROR CHECK INCOMING PARAMETERS
-
+	//TODO Finished
+	if (!m){
+		return;
+	}//-
 
 	printf("\nMatrix Contents (%s):\n", m->name);
 	printf("DIM = (%u,%u)\n", m->rows, m->cols);
